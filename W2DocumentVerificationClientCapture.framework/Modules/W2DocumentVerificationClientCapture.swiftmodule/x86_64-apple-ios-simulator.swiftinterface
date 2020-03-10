@@ -1,0 +1,38 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)
+// swift-module-flags: -target x86_64-apple-ios11.1-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name W2DocumentVerificationClientCapture
+import AcuantCommon
+import AcuantDocumentProcessing
+import AcuantFaceMatch
+import AcuantImagePreparation
+import Foundation
+import SnapKit
+import Swift
+import UIKit
+import W2SDKCore
+public protocol W2DocumentCaptureDelegate : AnyObject {
+  func documentCaptureViewController(_ documentCaptureViewController: UIKit.UIViewController, onCaptured image: UIKit.UIImage)
+  func documentCaptureViewController(_ documentCaptureViewController: UIKit.UIViewController, onCaptureFailed error: Swift.Error)
+  func documentCaptureViewController(_ documentCaptureViewController: UIKit.UIViewController, onBackButtonPressed button: UIKit.UIButton)
+}
+public class W2DocumentVerificationClientCaptureBuilder {
+  public init(licenceKey: Swift.String) throws
+  public func build() -> W2DocumentVerificationClientCapture.W2DocumentVerificationClientCaptureProtocol
+  @objc deinit
+}
+public protocol W2DocumentVerificationClientCaptureProtocol {
+  func presentCapturePage(from viewController: UIKit.UIViewController, view: UIKit.UIView, type: W2SDKCore.W2DocumentType, delegate: W2DocumentVerificationClientCapture.W2DocumentCaptureDelegate)
+}
+public enum W2DocumentVerificationClientCaptureError : Swift.String, Swift.Error {
+  case clientNotInitialized
+  case couldNotCaptureImage
+  case couldNotCropImage
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension W2DocumentVerificationClientCapture.W2DocumentVerificationClientCaptureError : Swift.Equatable {}
+extension W2DocumentVerificationClientCapture.W2DocumentVerificationClientCaptureError : Swift.Hashable {}
+extension W2DocumentVerificationClientCapture.W2DocumentVerificationClientCaptureError : Swift.RawRepresentable {}

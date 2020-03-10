@@ -1,0 +1,38 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)
+// swift-module-flags: -target x86_64-apple-ios11.1-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name W2FacialComparisonClient
+import Alamofire
+import Foundation
+import Swift
+import UIKit
+import W2SDKCore
+public enum W2FacialComparisonClientError : Swift.String, Swift.Error {
+  case clientNotInitialized
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct W2FacialComparisonResponse : Swift.Codable {
+  public var isMatch: Swift.Bool
+  public var confidence: Swift.Int
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct W2Facial {
+  public var currentImage: UIKit.UIImage
+  public var comparisonImage: UIKit.UIImage
+  public init(currentImage: UIKit.UIImage, comparisonImage: UIKit.UIImage)
+}
+public class W2FacialComparisonClientBuilder {
+  public init(licenceKey: Swift.String) throws
+  public func build() -> W2FacialComparisonClient.W2FacialComparisonClientProtocol
+  @objc deinit
+}
+public protocol W2FacialComparisonClientProtocol {
+  func compare(clientReference: Swift.String, facial: W2FacialComparisonClient.W2Facial, completion: @escaping (W2SDKCore.W2Response<W2FacialComparisonClient.W2FacialComparisonResponse>) -> Swift.Void)
+}
+extension W2FacialComparisonClient.W2FacialComparisonClientError : Swift.Equatable {}
+extension W2FacialComparisonClient.W2FacialComparisonClientError : Swift.Hashable {}
+extension W2FacialComparisonClient.W2FacialComparisonClientError : Swift.RawRepresentable {}

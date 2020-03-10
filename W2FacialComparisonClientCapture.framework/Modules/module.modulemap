@@ -1,0 +1,4 @@
+framework module W2FacialComparisonClientCapture {
+  header "W2FacialComparisonClientCapture-Swift.h"
+  requires objc
+}

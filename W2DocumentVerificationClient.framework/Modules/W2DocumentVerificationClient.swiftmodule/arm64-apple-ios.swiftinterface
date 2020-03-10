@@ -1,0 +1,120 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)
+// swift-module-flags: -target arm64-apple-ios11.1 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name W2DocumentVerificationClient
+import AcuantCommon
+import Alamofire
+import Foundation
+import Swift
+import UIKit
+import W2SDKCore
+public protocol W2DocumentVerificationClientProtocol {
+  func verify(clientReference: Swift.String, document: W2DocumentVerificationClient.W2DocumentCaptured, completion: @escaping (W2SDKCore.W2Response<W2DocumentVerificationClient.W2DocumentVerificationResponse>) -> Swift.Void)
+}
+public struct W2DocumentVerificationMetaData : Swift.Codable {
+  public var name: Swift.String?
+  public var dateOfBirth: Swift.String?
+  public var mrz: Swift.String?
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public enum W2DocumentCaptured {
+  case passport(UIKit.UIImage)
+  case drivingLicence(front: UIKit.UIImage, back: UIKit.UIImage)
+}
+public enum W2DocumentVerificationClientError : Swift.String, Swift.Error {
+  case clientNotInitialized
+  case couldNotCaptureImage
+  case couldNotCropImage
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class W2DocumentVerificationClientBuilder {
+  public init(licenceKey: Swift.String) throws
+  public func build() -> W2DocumentVerificationClient.W2DocumentVerificationClientProtocol
+  @objc deinit
+}
+public struct W2Region : Swift.Codable {
+  public var name: Swift.String
+  public var height: Swift.Int
+  public var width: Swift.Int
+  public var xAxis: Swift.Int
+  public var yAxis: Swift.Int
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct W2Alert : Swift.Codable {
+  public var name: Swift.String
+  public var description: Swift.String
+  public var mitigation: Swift.String
+  public var result: W2DocumentVerificationClient.W2AlertResult
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct W2DocumentVerificationResponse : Swift.Codable {
+  public var alerts: [W2DocumentVerificationClient.W2Alert]
+  public var checkedRegions: [W2DocumentVerificationClient.W2Region]
+  public var result: W2DocumentVerificationClient.W2VerificationResult
+  public var metaData: W2DocumentVerificationClient.W2DocumentVerificationMetaData
+  public var photo: UIKit.UIImage?
+  public var signature: UIKit.UIImage?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case alerts
+    case checkedRegions
+    case result
+    case metaData
+    case photo
+    case signature
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum W2VerificationResult : Swift.String, Swift.Codable {
+  case pass
+  case fail
+  case refer
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum W2AlertResult : Swift.String, Swift.Codable {
+  case failed
+  case refer
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class W2DocumentVerificationContext {
+  @objc deinit
+}
+extension W2DocumentVerificationClient.W2DocumentVerificationClientError : Swift.Equatable {}
+extension W2DocumentVerificationClient.W2DocumentVerificationClientError : Swift.Hashable {}
+extension W2DocumentVerificationClient.W2DocumentVerificationClientError : Swift.RawRepresentable {}
+extension W2DocumentVerificationClient.W2DocumentVerificationResponse.CodingKeys : Swift.Equatable {}
+extension W2DocumentVerificationClient.W2DocumentVerificationResponse.CodingKeys : Swift.Hashable {}
+extension W2DocumentVerificationClient.W2DocumentVerificationResponse.CodingKeys : Swift.RawRepresentable {}
+extension W2DocumentVerificationClient.W2VerificationResult : Swift.Equatable {}
+extension W2DocumentVerificationClient.W2VerificationResult : Swift.Hashable {}
+extension W2DocumentVerificationClient.W2VerificationResult : Swift.RawRepresentable {}
+extension W2DocumentVerificationClient.W2AlertResult : Swift.Equatable {}
+extension W2DocumentVerificationClient.W2AlertResult : Swift.Hashable {}
+extension W2DocumentVerificationClient.W2AlertResult : Swift.RawRepresentable {}
