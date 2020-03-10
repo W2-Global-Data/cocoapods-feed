@@ -369,12 +369,28 @@ SWIFT_CLASS("_TtC9W2SDKCore22DocumentCaptureSession")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+typedef SWIFT_ENUM(NSInteger, DocumentFeedback, open) {
+  DocumentFeedbackNoDocument = 0,
+  DocumentFeedbackSmallDocument = 1,
+  DocumentFeedbackBadDocument = 2,
+  DocumentFeedbackBadAspectRatio = 3,
+  DocumentFeedbackGoodDocument = 4,
+  DocumentFeedbackCaptureStarted = 5,
+  DocumentFeedbackCaptureFinished = 6,
+};
+
 
 typedef SWIFT_ENUM(NSInteger, FrameResult, open) {
   FrameResultNO_DOCUMENT = 0,
   FrameResultSMALL_DOCUMENT = 1,
   FrameResultBAD_ASPECT_RATIO = 2,
   FrameResultGOOD_DOCUMENT = 3,
+};
+
+typedef SWIFT_ENUM(NSInteger, ReverseRequirement, open) {
+  ReverseRequirementRequired = 0,
+  ReverseRequirementNotRequired = 1,
+  ReverseRequirementOptional = 2,
 };
 
 
@@ -390,6 +406,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 
 
 
+
+typedef SWIFT_ENUM(NSInteger, W2DocumentType, open) {
+  W2DocumentTypeId1 = 0,
+  W2DocumentTypeId3 = 1,
+};
+
+typedef SWIFT_ENUM(NSInteger, W2LicenceClientError, open) {
+  W2LicenceClientErrorLicenceClientNotInitialized = 0,
+  W2LicenceClientErrorInvalidLicenceKey = 1,
+  W2LicenceClientErrorCouldNotParseLicence = 2,
+  W2LicenceClientErrorResponseHasNotData = 3,
+};
+static NSString * _Nonnull const W2LicenceClientErrorDomain = @"W2SDKCore.W2LicenceClientError";
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop

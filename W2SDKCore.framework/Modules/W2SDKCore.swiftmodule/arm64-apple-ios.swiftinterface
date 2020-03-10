@@ -133,14 +133,17 @@ public class W2Logger {
 public protocol W2LicenceClient {
   func getLicence(key: Swift.String, completion: @escaping (W2SDKCore.W2Response<W2SDKCore.W2Licence>) -> Swift.Void)
 }
-public enum W2LicenceClientError : Swift.String, Swift.Error {
+@objc public enum W2LicenceClientError : Swift.Int, Swift.Error {
   case licenceClientNotInitialized
   case invalidLicenceKey
   case couldNotParseLicence
   case responseHasNotData
-  public typealias RawValue = Swift.String
-  public init?(rawValue: Swift.String)
-  public var rawValue: Swift.String {
+  public typealias RawValue = Swift.Int
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
     get
   }
 }
@@ -175,22 +178,22 @@ public enum W2LicenceClientError : Swift.String, Swift.Error {
   @objc override dynamic public init()
   @objc deinit
 }
-public enum W2DocumentType : Swift.Int, Swift.Codable {
-  case Id1
-  case Id3
-  public enum ReverseRequirement {
-    case required
-    case notRequired
-    case optional
-    public static func == (a: W2SDKCore.W2DocumentType.ReverseRequirement, b: W2SDKCore.W2DocumentType.ReverseRequirement) -> Swift.Bool
-    public var hashValue: Swift.Int {
-      get
-    }
-    public func hash(into hasher: inout Swift.Hasher)
-  }
-  public var reverseRequirement: W2SDKCore.W2DocumentType.ReverseRequirement {
+@objc public enum W2DocumentType : Swift.Int, Swift.Codable {
+  case Id1 = 0
+  case Id3 = 1
+  public var reverseRequirement: W2SDKCore.ReverseRequirement {
     get
   }
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ReverseRequirement : Swift.Int {
+  case required
+  case notRequired
+  case optional
   public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
@@ -230,7 +233,7 @@ public struct W2AnimationConstants {
   public static let mediumAnimationDuration: Foundation.TimeInterval
   public static let shortAnimationDuration: Foundation.TimeInterval
 }
-public enum DocumentFeedback {
+@objc public enum DocumentFeedback : Swift.Int {
   case NoDocument
   case SmallDocument
   case BadDocument
@@ -238,11 +241,11 @@ public enum DocumentFeedback {
   case GoodDocument
   case CaptureStarted
   case CaptureFinished
-  public static func == (a: W2SDKCore.DocumentFeedback, b: W2SDKCore.DocumentFeedback) -> Swift.Bool
-  public var hashValue: Swift.Int {
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
     get
   }
-  public func hash(into hasher: inout Swift.Hasher)
 }
 public protocol DocumentFeedbackDelegate {
   func documentFeedback(feedback: W2SDKCore.DocumentFeedback)
@@ -282,13 +285,12 @@ extension W2SDKCore.FrameResult : Swift.RawRepresentable {}
 extension W2SDKCore.DocumentCameraController.CameraState : Swift.Equatable {}
 extension W2SDKCore.DocumentCameraController.CameraState : Swift.Hashable {}
 extension W2SDKCore.DocumentCameraController.CameraState : Swift.RawRepresentable {}
-extension W2SDKCore.W2LicenceClientError : Swift.Equatable {}
-extension W2SDKCore.W2LicenceClientError : Swift.Hashable {}
-extension W2SDKCore.W2LicenceClientError : Swift.RawRepresentable {}
 extension W2SDKCore.W2DocumentType : Swift.Equatable {}
 extension W2SDKCore.W2DocumentType : Swift.Hashable {}
 extension W2SDKCore.W2DocumentType : Swift.RawRepresentable {}
-extension W2SDKCore.W2DocumentType.ReverseRequirement : Swift.Equatable {}
-extension W2SDKCore.W2DocumentType.ReverseRequirement : Swift.Hashable {}
+extension W2SDKCore.ReverseRequirement : Swift.Equatable {}
+extension W2SDKCore.ReverseRequirement : Swift.Hashable {}
+extension W2SDKCore.ReverseRequirement : Swift.RawRepresentable {}
 extension W2SDKCore.DocumentFeedback : Swift.Equatable {}
 extension W2SDKCore.DocumentFeedback : Swift.Hashable {}
+extension W2SDKCore.DocumentFeedback : Swift.RawRepresentable {}
