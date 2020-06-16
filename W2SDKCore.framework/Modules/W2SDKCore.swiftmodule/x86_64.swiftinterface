@@ -1,0 +1,301 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-module-flags: -target x86_64-apple-ios11.1-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name W2SDKCore
+import AVFoundation
+import AcuantCommon
+import AcuantImagePreparation
+import Alamofire
+import Foundation
+import SnapKit
+import Swift
+import UIKit
+@objc public protocol FrameAnalysisDelegate {
+  @objc func onFrameAvailable(frameResult: W2SDKCore.FrameResult, points: Swift.Array<CoreGraphics.CGPoint>?)
+}
+@objc public enum FrameResult : Swift.Int {
+  case NO_DOCUMENT, SMALL_DOCUMENT, BAD_ASPECT_RATIO, GOOD_DOCUMENT
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension String {
+  public func toImage() -> UIKit.UIImage?
+}
+@frozen public enum W2ObjectValidationError {
+  case emptyArguement(name: Swift.String)
+  case blankArguement(name: Swift.String)
+}
+extension W2ObjectValidationError : Foundation.LocalizedError {
+  public var localizedDescription: Swift.String {
+    get
+  }
+}
+extension String {
+  public func validateEmptyOrWhiteSpace(_ argumentName: Swift.String? = nil) -> Swift.Error?
+  public func validateEmpty(_ argumentName: Swift.String? = nil) -> Swift.Error?
+  public func validateWhiteSpace(_ argumentName: Swift.String? = nil) -> Swift.Error?
+}
+extension Collection {
+  public func validateEmpty(_ argumentName: Swift.String? = nil) -> Swift.Error?
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class DocumentCameraController : UIKit.UIViewController, W2SDKCore.DocumentCaptureDelegate, W2SDKCore.FrameAnalysisDelegate {
+  @objc public enum CameraState : Swift.Int {
+    case Align = 0, MoveCloser = 1, Steady = 2, Hold = 3, Capture = 4
+    public typealias RawValue = Swift.Int
+    public init?(rawValue: Swift.Int)
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public class func getCameraController(delegate: W2SDKCore.CameraCaptureDelegate, cameraOptions: W2SDKCore.AcuantCameraOptions) -> W2SDKCore.DocumentCameraController
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public var prefersStatusBarHidden: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidLayoutSubviews()
+  @objc override dynamic public func didReceiveMemoryWarning()
+  @objc public func didStartCaptureSession()
+  @objc public func documentCaptured(image: UIKit.UIImage, barcodeString: Swift.String?)
+  @objc public func rotateImage(image: UIKit.UIImage) -> UIKit.UIImage
+  @objc public func isDocumentMoved(newPoints: Swift.Array<CoreGraphics.CGPoint>) -> Swift.Bool
+  @objc public func onFrameAvailable(frameResult: W2SDKCore.FrameResult, points: Swift.Array<CoreGraphics.CGPoint>?)
+  @objc public func readyToCapture()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class DocumentCaptureSession : AVFoundation.AVCaptureSession, AVFoundation.AVCaptureMetadataOutputObjectsDelegate, AVFoundation.AVCaptureVideoDataOutputSampleBufferDelegate, AVFoundation.AVCapturePhotoCaptureDelegate {
+  @objc public class func getDocumentCaptureSession(delegate: W2SDKCore.DocumentCaptureDelegate?, frameDelegate: W2SDKCore.FrameAnalysisDelegate, autoCapture: Swift.Bool, captureDevice: AVFoundation.AVCaptureDevice?) -> W2SDKCore.DocumentCaptureSession
+  @objc public func enableCapture()
+  @objc override dynamic public func startRunning()
+  @objc public func captureOutput(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+  @objc public func getFrameMatchThreshold(cropDuration: Swift.Double) -> Swift.Int
+  @objc public func metadataOutput(_ output: AVFoundation.AVCaptureMetadataOutput, didOutput metadataObjects: [AVFoundation.AVMetadataObject], from connection: AVFoundation.AVCaptureConnection)
+  @objc public func photoOutput(_ output: AVFoundation.AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVFoundation.AVCapturePhoto, error: Swift.Error?)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public protocol AppOrientationDelegate {
+  @objc func onAppOrientationLockChanged(mode: UIKit.UIInterfaceOrientationMask)
+}
+@objc public protocol DocumentCaptureDelegate {
+  @objc func readyToCapture()
+  @objc func documentCaptured(image: UIKit.UIImage, barcodeString: Swift.String?)
+  @objc func didStartCaptureSession()
+}
+extension W2Licence {
+  public var documentVerificationUrl: Swift.String {
+    get
+  }
+  public var facialComparisonUrl: Swift.String {
+    get
+  }
+}
+public class RequestExecutor {
+  public init()
+  public func executeRequest<T, U>(url: Swift.String, method: Alamofire.HTTPMethod = .get, parameters: U, headers: Alamofire.HTTPHeaders = [:], responseType: T.Type, completion: @escaping (W2SDKCore.W2Response<T>) -> Swift.Void) where T : Swift.Decodable, U : Swift.Encodable
+  @objc deinit
+}
+@frozen public enum W2Response<T> {
+  case success(data: T)
+  case failure(error: Swift.Error)
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class CaptureConstants : ObjectiveC.NSObject {
+  @objc public static let CAMERA_PREVIEW_LONGER_SIDE_STANDARD: Swift.Int
+  @objc public static let CAMERA_PRIVEW_LARGER_DOCUMENT_DPI_RATIO: Swift.Double
+  @objc public static let CAMERA_PRIVEW_SMALLER_DOCUMENT_DPI_RATIO: Swift.Double
+  @objc public static let ASPECT_RATIO_ID1: Swift.Double
+  @objc public static let ASPECT_RATIO_ID3: Swift.Double
+  @objc public static let ASPECT_RATIO_THRESHOLD: Swift.Double
+  @objc public static let MANDATORY_RESOLUTION_THRESHOLD_DEFAULT: Swift.Int
+  @objc public static let MANDATORY_RESOLUTION_THRESHOLD_SMALL: Swift.Int
+  @objc public static let MANDATORY_RESOLUTION_THRESHOLD_DEFAULT_OLD_PHONES: Swift.Int
+  @objc public static let MANDATORY_RESOLUTION_THRESHOLD_SMALL_OLD_PHONES: Swift.Int
+  @objc public static let NO_DOCUMENT_DPI_THRESHOLD: Swift.Int
+  @objc public static let SMALL_DOCUMENT_DPI_THRESHOLD: Swift.Int
+  @objc public static let SHARPNESS_THRESHOLD: Swift.Int
+  @objc public static let GLARE_THRESHOLD: Swift.Int
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers public class W2Logger {
+  public class func d(_ object: Any, filename: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, funcName: Swift.String = #function)
+  public class func i(_ object: Any, filename: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, funcName: Swift.String = #function)
+  public class func w(_ object: Any, filename: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, funcName: Swift.String = #function)
+  public class func e(_ object: Any, filename: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, funcName: Swift.String = #function)
+  @objc deinit
+}
+public protocol W2LicenceClient {
+  func getLicence(key: Swift.String, completion: @escaping (W2SDKCore.W2Response<W2SDKCore.W2Licence>) -> Swift.Void)
+}
+@objc public enum W2LicenceClientError : Swift.Int, Swift.Error {
+  case licenceClientNotInitialized
+  case invalidLicenceKey
+  case couldNotParseLicence
+  case responseHasNotData
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers public class CameraDocumentOverlayView : QuartzCore.CAShapeLayer {
+  public var colorHold: CoreGraphics.CGColor?
+  public var colorCapture: CoreGraphics.CGColor?
+  public var alwaysHideBox: Swift.Bool
+  public func showBorderFromState(state: W2SDKCore.DocumentCameraController.CameraState = DocumentCameraController.CameraState.Hold)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol CameraCaptureDelegate {
+  @objc func setCapturedImage(image: AcuantCommon.Image, barcodeString: Swift.String?)
+}
+@objc @objcMembers public class AcuantCameraOptions : ObjectiveC.NSObject {
+  @objc final public let timeInMsPerDigit: Swift.Int
+  @objc final public let digitsToShow: Swift.Int
+  @objc final public let allowBox: Swift.Bool
+  @objc final public let autoCapture: Swift.Bool
+  @objc final public let hideNavigationBar: Swift.Bool
+  @objc final public let bracketLengthInHorizontal: Swift.Int
+  @objc final public let bracketLengthInVertical: Swift.Int
+  @objc final public let defaultBracketMarginWidth: CoreGraphics.CGFloat
+  @objc final public let defaultBracketMarginHeight: CoreGraphics.CGFloat
+  @objc final public let colorHold: CoreGraphics.CGColor
+  @objc final public let colorCapturing: CoreGraphics.CGColor
+  @objc final public let colorBracketAlign: CoreGraphics.CGColor
+  @objc final public let colorBracketCloser: CoreGraphics.CGColor
+  @objc final public let colorBracketHold: CoreGraphics.CGColor
+  @objc final public let colorBracketCapture: CoreGraphics.CGColor
+  @objc public init(timeInMsPerDigit: Swift.Int = 900, digitsToShow: Swift.Int = 2, allowBox: Swift.Bool = true, autoCapture: Swift.Bool = true, hideNavigationBar: Swift.Bool = true, bracketLengthInHorizontal: Swift.Int = 80, bracketLengthInVertical: Swift.Int = 50, defaultBracketMarginWidth: CoreGraphics.CGFloat = 0.5, defaultBracketMarginHeight: CoreGraphics.CGFloat = 0.6, colorHold: CoreGraphics.CGColor = UIColor.yellow.cgColor, colorCapturing: CoreGraphics.CGColor = UIColor.green.cgColor, colorBracketAlign: CoreGraphics.CGColor = UIColor.black.cgColor, colorBracketCloser: CoreGraphics.CGColor = UIColor.red.cgColor, colorBracketHold: CoreGraphics.CGColor = UIColor.yellow.cgColor, colorBracketCapture: CoreGraphics.CGColor = UIColor.green.cgColor)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public enum W2DocumentType : Swift.Int, Swift.Codable {
+  case Id1 = 0
+  case Id3 = 1
+  public var reverseRequirement: W2SDKCore.ReverseRequirement {
+    get
+  }
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ReverseRequirement : Swift.Int {
+  case required
+  case notRequired
+  case optional
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class W2Licence : Swift.Codable {
+  public var licenceKey: Swift.String
+  public var licenceToken: Swift.String
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class AcuantCameraTextView : QuartzCore.CATextLayer {
+  public var textSizeDefault: CoreGraphics.CGFloat
+  public var textSizeCapture: CoreGraphics.CGFloat
+  public var backgroundColorDefault: CoreGraphics.CGColor?
+  public var backgroundColorCapture: CoreGraphics.CGColor?
+  public var foregroundColorDefault: CoreGraphics.CGColor?
+  public var foregroundColorCapture: CoreGraphics.CGColor?
+  public func setLookFromState(state: W2SDKCore.DocumentCameraController.CameraState, frame: CoreGraphics.CGRect)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class W2LicenceClientFactory {
+  public static func getLicenceClient() -> W2SDKCore.W2LicenceClient
+  @objc deinit
+}
+extension UIViewController {
+  public func addAndSetupChildViewController(_ childViewController: UIKit.UIViewController, to view: UIKit.UIView, animated: Swift.Bool)
+  public func removeAndTeardownChildViewController(_ childViewController: UIKit.UIViewController, animated: Swift.Bool)
+}
+@_hasMissingDesignatedInitializers public class W2ClaimsIdentity {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class W2AnimationConstants {
+  public static let longAnimationDuration: Foundation.TimeInterval
+  public static let mediumAnimationDuration: Foundation.TimeInterval
+  public static let shortAnimationDuration: Foundation.TimeInterval
+  @objc deinit
+}
+@objc public enum DocumentFeedback : Swift.Int {
+  case NoDocument
+  case SmallDocument
+  case BadDocument
+  case BadAspectRatio
+  case GoodDocument
+  case CaptureStarted
+  case CaptureFinished
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol DocumentFeedbackDelegate {
+  func documentFeedback(feedback: W2SDKCore.DocumentFeedback)
+}
+@objc extension UIDevice {
+  @objc public static let modelName: Swift.String
+}
+open class W2LicencedSdkBuilderOptions {
+  public var licenceKey: Swift.String {
+    get
+  }
+  public init()
+  public func setLicenceKey(_ key: Swift.String) throws
+  @objc deinit
+}
+extension UIImage {
+  public func toString() -> Swift.String?
+}
+@objc @_hasMissingDesignatedInitializers public class CameraCornerOverlayView : QuartzCore.CALayer {
+  public var bracketWidth: Swift.Int?
+  public var bracketHeight: Swift.Int?
+  public var defaultBracketMarginWidth: CoreGraphics.CGFloat?
+  public var defaultBracketMarginHeight: CoreGraphics.CGFloat?
+  public var colorAlign: CoreGraphics.CGColor?
+  public var colorCloser: CoreGraphics.CGColor?
+  public var colorHold: CoreGraphics.CGColor?
+  public var colorCapture: CoreGraphics.CGColor?
+  public init(options: W2SDKCore.AcuantCameraOptions)
+  public func setLookFromState(state: W2SDKCore.DocumentCameraController.CameraState)
+  @objc override dynamic public init()
+  @objc override dynamic public init(layer: Any)
+  @objc deinit
+}
+extension W2SDKCore.FrameResult : Swift.Equatable {}
+extension W2SDKCore.FrameResult : Swift.Hashable {}
+extension W2SDKCore.FrameResult : Swift.RawRepresentable {}
+extension W2SDKCore.DocumentCameraController.CameraState : Swift.Equatable {}
+extension W2SDKCore.DocumentCameraController.CameraState : Swift.Hashable {}
+extension W2SDKCore.DocumentCameraController.CameraState : Swift.RawRepresentable {}
+extension W2SDKCore.W2LicenceClientError : Swift.Equatable {}
+extension W2SDKCore.W2LicenceClientError : Swift.Hashable {}
+extension W2SDKCore.W2LicenceClientError : Swift.RawRepresentable {}
+extension W2SDKCore.W2DocumentType : Swift.Equatable {}
+extension W2SDKCore.W2DocumentType : Swift.Hashable {}
+extension W2SDKCore.W2DocumentType : Swift.RawRepresentable {}
+extension W2SDKCore.ReverseRequirement : Swift.Equatable {}
+extension W2SDKCore.ReverseRequirement : Swift.Hashable {}
+extension W2SDKCore.ReverseRequirement : Swift.RawRepresentable {}
+extension W2SDKCore.DocumentFeedback : Swift.Equatable {}
+extension W2SDKCore.DocumentFeedback : Swift.Hashable {}
+extension W2SDKCore.DocumentFeedback : Swift.RawRepresentable {}
