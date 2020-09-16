@@ -1,0 +1,36 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-module-flags: -target arm64-apple-ios11.1 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name W2FacialComparisonClientCapture
+import AVFoundation
+import AcuantCommon
+import AcuantHGLiveness
+import Foundation
+import SnapKit
+import Swift
+import UIKit
+import W2SDKCore
+public protocol W2FaceCaptureViewControllerDelegate : AnyObject {
+  func faceCaptureViewController(_ faceCaptureViewController: UIKit.UIViewController, onCaptured image: UIKit.UIImage)
+  func faceCaptureViewController(_ faceCaptureViewController: UIKit.UIViewController, onCaptureFailed error: Swift.Error)
+  func faceCaptureViewController(_ faceCaptureViewController: UIKit.UIViewController, onBackButtonPressed button: UIKit.UIButton)
+}
+public class W2FacialComparisonClientCaptureBuilder {
+  public init(licenceKey: Swift.String) throws
+  public func build() -> W2FacialComparisonClientCapture.W2FacialComparisonClientCaptureProtocol
+  @objc deinit
+}
+@frozen public enum W2FacialComparisonClientCaptureError : Swift.String, Swift.Error {
+  case clientNotInitialized
+  case couldNotCaptureImage
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol W2FacialComparisonClientCaptureProtocol {
+  func presentCapturePage(from viewController: UIKit.UIViewController, view: UIKit.UIView, delegate: W2FacialComparisonClientCapture.W2FaceCaptureViewControllerDelegate)
+}
+extension W2FacialComparisonClientCapture.W2FacialComparisonClientCaptureError : Swift.Equatable {}
+extension W2FacialComparisonClientCapture.W2FacialComparisonClientCaptureError : Swift.Hashable {}
+extension W2FacialComparisonClientCapture.W2FacialComparisonClientCaptureError : Swift.RawRepresentable {}
