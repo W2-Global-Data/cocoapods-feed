@@ -1,0 +1,4 @@
+framework module W2SDKCore {
+  header "W2SDKCore-Swift.h"
+  requires objc
+}
