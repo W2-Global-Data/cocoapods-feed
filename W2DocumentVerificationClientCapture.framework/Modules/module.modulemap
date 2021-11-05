@@ -1,0 +1,4 @@
+framework module W2DocumentVerificationClientCapture {
+  header "W2DocumentVerificationClientCapture-Swift.h"
+  requires objc
+}
